@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import { Space_Mono } from 'next/font/google';
 
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -14,8 +13,6 @@ import '@/styles/globals.scss';
 /**
  * Glancyr — primary brand typeface.
  * Drop the .woff2 files into `public/fonts/glancyr/` (see README in that folder).
- * If a weight you don't have is referenced, Next will throw at build time —
- * remove that entry from `src` until you have the file.
  */
 const glancyr = localFont({
   src: [
@@ -29,12 +26,12 @@ const glancyr = localFont({
   fallback: ['Space Grotesk', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
 });
 
-const mono = Space_Mono({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-  variable: '--font-mono-loaded',
-  display: 'swap',
-});
+/* NOTE: previously imported Space_Mono via `next/font/google` — that runs a
+   network fetch to fonts.gstatic.com at build time, which fails inside CI
+   build containers (Vercel) when the network is restricted. We now use the
+   OS monospace stack via the SCSS `$font-mono` variable. If you want a
+   custom mono later, drop the .woff2 files into `public/fonts/mono/` and
+   add another `localFont(...)` block here. */
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://houseofaliens.com'),
@@ -67,7 +64,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${glancyr.variable} ${mono.variable}`}>
+    <html lang="en" className={glancyr.variable}>
       <body>
         <CartProvider>
           <Header />
