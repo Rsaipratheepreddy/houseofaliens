@@ -1,0 +1,33 @@
+@use '../abstracts' as *;
+
+body {
+  font-family: $font-body;
+  font-size: $fs-base;
+  font-weight: $fw-regular;
+  line-height: $lh-base;
+  color: $color-ink;
+  background: $color-void;
+}
+
+h1 { @include display($fs-4xl); }
+h2 { @include display($fs-3xl); }
+h3 { @include display($fs-2xl); }
+h4 { @include display($fs-xl); }
+h5 { @include display($fs-lg); }
+h6 { @include display($fs-md); }
+
+a {
+  transition: color $dur-fast $ease-out;
+
+  &:hover {
+    color: $color-accent;
+  }
+}
+
+strong, b {
+  font-weight: $fw-semibold;
+}
+
+code, kbd, pre, samp {
+  font-family: $font-mono;
+}

@@ -1,0 +1,19 @@
+@use 'abstracts' as *;
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @include up(sm) { grid-template-columns: repeat(2, 1fr); }
+  @include up(lg) { grid-template-columns: repeat(3, 1fr); }
+  @include up(xl) { grid-template-columns: repeat(4, 1fr); }
+}
+
+.empty {
+  padding: 4rem 1.5rem;
+  border: 1px dashed $color-border;
+  border-radius: $radius-lg;
+  text-align: center;
+  color: $color-ink-mute;
+}

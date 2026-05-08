@@ -1,0 +1,42 @@
+@use 'abstracts' as *;
+
+.root {
+  border-block: 1px solid $color-border;
+  background: $color-deep;
+  overflow: hidden;
+  padding-block: 0.875rem;
+}
+
+.track {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: marquee 28s linear infinite;
+  will-change: transform;
+}
+
+.row {
+  display: inline-flex;
+  align-items: center;
+  gap: 3rem;
+  padding-inline: 1.5rem;
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 3rem;
+    color: $color-ink;
+    font-family: $font-mono;
+    font-size: $fs-xs;
+    letter-spacing: $ls-wider;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+}
+
+.dot { color: $color-accent; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}

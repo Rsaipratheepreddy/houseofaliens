@@ -1,0 +1,76 @@
+@use 'abstracts' as *;
+
+.btn {
+  --bg: #{$color-accent};
+  --fg: #{$color-void};
+  --bd: transparent;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  border: 1px solid var(--bd);
+  border-radius: $radius-pill;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  font-weight: $fw-medium;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform $dur-fast $ease-out,
+    background-color $dur-base $ease-out,
+    color $dur-base $ease-out,
+    border-color $dur-base $ease-out,
+    box-shadow $dur-base $ease-out;
+  user-select: none;
+
+  &:hover { transform: translateY(-1px); }
+  &:active { transform: translateY(0); }
+  &:focus-visible { @include focus-ring; }
+  &:disabled, &[aria-disabled='true'] {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+}
+
+.inner { display: inline-flex; align-items: center; gap: 0.5rem; }
+
+/* ---- Variants ------------------------------------------------------------ */
+.v-primary {
+  --bg: #{$color-accent};
+  --fg: #{$color-void};
+  &:hover { box-shadow: $shadow-glow; }
+}
+
+.v-secondary {
+  --bg: #{$color-surface};
+  --fg: #{$color-ink};
+  --bd: #{$color-border};
+  &:hover { --bg: #{$color-surface-2}; --bd: #{$color-border-strong}; }
+}
+
+.v-ghost {
+  --bg: transparent;
+  --fg: #{$color-ink};
+  &:hover { --bg: #{$color-surface}; }
+}
+
+.v-outline {
+  --bg: transparent;
+  --fg: #{$color-ink};
+  --bd: #{$color-border-strong};
+  &:hover { --fg: #{$color-accent}; --bd: #{$color-accent}; }
+}
+
+/* ---- Sizes --------------------------------------------------------------- */
+.s-sm { padding: 0.625rem 1.125rem; font-size: 0.6875rem; }
+.s-md { padding: 0.875rem 1.5rem;   font-size: $fs-xs; }
+.s-lg { padding: 1.125rem 2rem;     font-size: $fs-sm; }
+
+.full { width: 100%; }

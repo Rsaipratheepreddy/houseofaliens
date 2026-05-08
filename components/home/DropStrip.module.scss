@@ -1,0 +1,177 @@
+@use 'abstracts' as *;
+
+.root {
+  position: relative;
+  isolation: isolate;
+  background: $color-deep;
+  border-block: 1px solid $color-border;
+  padding-block: clamp(4rem, 10vw, 8rem);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 100%, rgba($color-accent, 0.18), transparent 50%),
+      radial-gradient(ellipse at 80% 0%,   rgba($color-plasma, 0.14), transparent 55%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    @include grid-bg(rgba(255, 255, 255, 0.03), 64px);
+    mask: radial-gradient(ellipse at 50% 50%, black, transparent 70%);
+    -webkit-mask: radial-gradient(ellipse at 50% 50%, black, transparent 70%);
+    z-index: -1;
+  }
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+
+  @include up(lg) {
+    grid-template-columns: 1.1fr 1fr;
+    gap: 5rem;
+  }
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.eyebrow {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+.title {
+  font-family: $font-display;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: $fw-bold;
+  letter-spacing: -0.025em;
+  line-height: 1.0;
+  text-transform: uppercase;
+  color: $color-ink;
+}
+
+.italic { font-style: italic; font-weight: $fw-regular; color: $color-ink-mute; }
+.accent {
+  background: $gradient-aurora;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lede {
+  color: $color-ink-mute;
+  max-width: 52ch;
+  line-height: $lh-relaxed;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: flex-start;
+
+  @include up(lg) { align-items: flex-end; }
+}
+
+/* ── Countdown ──────────────────────────────────────────────────── */
+.countdown {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 520px;
+}
+
+.slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem 0.5rem;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 24px;
+    height: 1px;
+    background: $color-accent;
+    transform: translateX(-50%);
+  }
+}
+
+.slotPulse {
+  border-color: rgba($color-accent, 0.4);
+  background: rgba($color-accent, 0.05);
+  animation: slotPulse 1s ease-in-out infinite;
+}
+
+@keyframes slotPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba($color-accent, 0); }
+  50%      { box-shadow: 0 0 0 6px rgba($color-accent, 0.06); }
+}
+
+.slotValue {
+  font-family: $font-display;
+  font-weight: $fw-bold;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: $color-ink;
+}
+
+.slotLabel {
+  margin-top: 0.5rem;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-ink-faint;
+}
+
+/* ── CTA ────────────────────────────────────────────────────────── */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border: 1px solid $color-border-strong;
+  border-radius: $radius-pill;
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-ink;
+  text-decoration: none;
+  transition: all $dur-fast $ease-out;
+
+  .arrow { transition: transform $dur-fast $ease-out; }
+
+  &:hover {
+    border-color: $color-accent;
+    color: $color-accent;
+    .arrow { transform: translateX(4px); }
+  }
+}

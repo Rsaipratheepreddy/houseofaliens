@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-label="UFO">
+  <!-- Beam -->
+  <path d="M16 36 L8 60 L56 60 L48 36 Z" fill="url(#beam)" opacity="0.6"/>
+  <!-- Saucer body -->
+  <ellipse cx="32" cy="36" rx="26" ry="6" fill="#22222e"/>
+  <ellipse cx="32" cy="34" rx="22" ry="5" fill="#33334a"/>
+  <!-- Dome -->
+  <path d="M16 32 Q22 16 32 16 Q42 16 48 32 Z" fill="#67e8f9" opacity="0.85"/>
+  <path d="M22 30 Q26 22 32 22" stroke="#f5f5f7" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+  <!-- Lights -->
+  <circle cx="14" cy="36" r="1.5" fill="#b6ff3c"/>
+  <circle cx="24" cy="38" r="1.5" fill="#c084fc"/>
+  <circle cx="32" cy="38.5" r="1.5" fill="#b6ff3c"/>
+  <circle cx="40" cy="38" r="1.5" fill="#c084fc"/>
+  <circle cx="50" cy="36" r="1.5" fill="#b6ff3c"/>
+
+  <defs>
+    <linearGradient id="beam" x1="32" y1="36" x2="32" y2="60" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#b6ff3c" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#b6ff3c" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 48" fill="none" role="img" aria-label="House of Aliens">
+  <!-- Alien glyph -->
+  <g transform="translate(0,0)">
+    <ellipse cx="22" cy="24" rx="14" ry="18" fill="#b6ff3c"/>
+    <ellipse cx="17" cy="22" rx="3" ry="5" fill="#050507"/>
+    <ellipse cx="27" cy="22" rx="3" ry="5" fill="#050507"/>
+    <path d="M16 33 Q22 36 28 33" stroke="#050507" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g fill="#f5f5f7" font-family="Space Grotesk, Inter, sans-serif" font-weight="700" font-size="14" letter-spacing="0.18em">
+    <text x="50" y="22" textLength="184" lengthAdjust="spacingAndGlyphs">HOUSE OF ALIENS</text>
+  </g>
+  <g fill="#9a9aa8" font-family="Space Mono, ui-monospace, monospace" font-size="7" letter-spacing="0.32em">
+    <text x="50" y="36">FUTURISTIC · STREETWEAR</text>
+  </g>
+</svg>

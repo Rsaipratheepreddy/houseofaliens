@@ -1,0 +1,29 @@
+@use 'abstracts' as *;
+
+.gridSection {}
+
+.inner { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1rem;
+  border-bottom: 1px solid $color-border;
+}
+
+.toolbarRight { display: inline-flex; gap: 0.625rem; }
+
+.toolbarBtn {
+  @include reset-button;
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-ink-mute;
+  border: 1px solid $color-border;
+  border-radius: $radius-pill;
+  padding: 0.5rem 0.875rem;
+
+  &:hover { color: $color-accent; border-color: $color-accent; }
+}

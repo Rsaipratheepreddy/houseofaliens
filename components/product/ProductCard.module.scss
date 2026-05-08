@@ -1,0 +1,166 @@
+@use 'abstracts' as *;
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.125rem;
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  isolation: isolate;
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background: $color-surface;
+  overflow: hidden;
+  border-radius: 2px; // editorial — barely-rounded corners
+  transition: transform $dur-base $ease-out;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.55) 100%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity $dur-base $ease-out;
+  }
+
+  .card:hover & {
+    transform: translateY(-3px);
+    &::after { opacity: 1; }
+  }
+}
+
+.index {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 3;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  letter-spacing: $ls-wider;
+  color: $color-ink;
+  text-transform: uppercase;
+  mix-blend-mode: difference;
+  opacity: 0.85;
+}
+
+.badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 3;
+}
+
+.discount {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  z-index: 3;
+  padding: 0.25rem 0.625rem;
+  border-radius: 2px;
+  background: $color-accent;
+  color: $color-void;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  letter-spacing: $ls-wider;
+  font-weight: $fw-bold;
+}
+
+/* ── Crossfade images ─────────────────────────────────────────────────── */
+.img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity $dur-slow $ease-out, transform 700ms $ease-out, filter 700ms $ease-out;
+  filter: saturate(1.05) contrast(1.02);
+}
+
+.imgPrimary  { opacity: 1; z-index: 1; }
+.imgSecondary{ opacity: 0; z-index: 2; transform: scale(1.04); }
+
+.imgHidden  { opacity: 0; }
+.imgVisible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card:hover .imgPrimary { transform: scale(1.04); }
+
+/* ── Bottom slide-in CTA strip ────────────────────────────────────────── */
+.cta {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 1rem;
+  background: rgba($color-accent, 0.92);
+  color: $color-void;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  font-weight: $fw-semibold;
+}
+
+/* ── Body ─────────────────────────────────────────────────────────────── */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.drop {
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+.name {
+  font-family: $font-display;
+  font-size: $fs-lg;
+  font-weight: $fw-semibold;
+  letter-spacing: $ls-tight;
+  text-transform: uppercase;
+  transition: color $dur-fast $ease-out;
+}
+
+.card:hover .name { color: $color-ink; }
+
+.tagline {
+  color: $color-ink-mute;
+  font-size: 0.875rem;
+  @include truncate(2);
+}
+
+.priceRow {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.625rem;
+  margin-top: 0.25rem;
+}
+
+.price {
+  font-family: $font-mono;
+  font-size: $fs-md;
+  font-weight: $fw-semibold;
+  color: $color-ink;
+}
+
+.compareAt {
+  font-family: $font-mono;
+  font-size: $fs-sm;
+  text-decoration: line-through;
+  color: $color-ink-faint;
+}

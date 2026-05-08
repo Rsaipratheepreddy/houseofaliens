@@ -1,0 +1,43 @@
+@use 'abstracts' as *;
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.label {
+  @include label;
+}
+
+.input {
+  appearance: none;
+  width: 100%;
+  background: $color-surface;
+  color: $color-ink;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  padding: 0.875rem 1rem;
+  font-family: $font-body;
+  font-size: $fs-base;
+  transition: border-color $dur-fast $ease-out, box-shadow $dur-fast $ease-out, background-color $dur-fast $ease-out;
+
+  &::placeholder { color: $color-ink-faint; }
+
+  &:hover { border-color: $color-border-strong; }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent;
+    box-shadow: 0 0 0 3px rgba($color-accent, 0.18);
+    background: $color-surface-2;
+  }
+}
+
+.hint  { font-family: $font-mono; font-size: 0.6875rem; letter-spacing: $ls-wider; color: $color-ink-faint; text-transform: uppercase; }
+.error { font-family: $font-mono; font-size: 0.6875rem; letter-spacing: $ls-wider; color: $color-danger;   text-transform: uppercase; }
+
+.errored .input {
+  border-color: $color-danger;
+  &:focus { box-shadow: 0 0 0 3px rgba($color-danger, 0.2); }
+}

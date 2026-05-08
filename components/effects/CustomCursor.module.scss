@@ -1,0 +1,41 @@
+@use 'abstracts' as *;
+
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 56px;
+  height: 56px;
+  pointer-events: none;
+  z-index: 99999; // above everything (modal/drawer/etc.)
+  opacity: 0;
+  transform: translate3d(-100px, -100px, 0) translate(-50%, -50%);
+  transition: opacity $dur-base $ease-out, width $dur-base $ease-out, height $dur-base $ease-out;
+  will-change: transform;
+  mix-blend-mode: normal;
+
+  img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+}
+
+.shown {
+  opacity: 1;
+}
+
+// Slight grow + glow when hovering interactive elements
+.hovering {
+  width: 72px;
+  height: 72px;
+  filter: drop-shadow(0 0 12px rgba($color-accent, 0.55));
+}
+
+// Touch / coarse pointer devices: don't render the custom cursor at all
+@media (pointer: coarse), (hover: none) {
+  .cursor { display: none; }
+}

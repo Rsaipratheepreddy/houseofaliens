@@ -1,0 +1,27 @@
+@use 'abstracts' as *;
+
+.root {
+  min-height: 70dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 4rem 1.5rem;
+  color: $color-ink-mute;
+}
+
+.title {
+  font-family: $font-display;
+  font-size: $fs-3xl;
+  font-weight: $fw-bold;
+  letter-spacing: $ls-tight;
+  color: $color-ink;
+  margin-top: 0.25rem;
+}
+
+.lede { max-width: 48ch; line-height: $lh-relaxed; }
+
+.foot { margin-top: 1.5rem; font-family: $font-mono; font-size: $fs-xs; letter-spacing: $ls-wider; text-transform: uppercase; }
+.foot a { color: $color-accent; }

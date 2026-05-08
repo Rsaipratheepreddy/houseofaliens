@@ -1,0 +1,13 @@
+@use 'abstracts' as *;
+
+.related { background: $color-deep; border-top: 1px solid $color-border; }
+
+.relatedInner { display: flex; flex-direction: column; gap: 1.75rem; }
+
+.relatedTitle {
+  font-family: $font-display;
+  font-size: $fs-2xl;
+  font-weight: $fw-bold;
+  letter-spacing: $ls-tight;
+  margin-top: 0.25rem;
+}

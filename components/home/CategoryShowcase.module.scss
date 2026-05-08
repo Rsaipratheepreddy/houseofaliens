@@ -1,0 +1,134 @@
+@use 'abstracts' as *;
+
+.root { background: $color-void; border-block: 1px solid $color-border; }
+
+.inner { display: flex; flex-direction: column; gap: 2.5rem; }
+
+.head { display: flex; flex-direction: column; gap: 0.5rem; max-width: 640px; }
+
+.eyebrow {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+.title {
+  font-family: $font-display;
+  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-weight: $fw-bold;
+  letter-spacing: -0.025em;
+  line-height: 1.0;
+  text-transform: uppercase;
+  color: $color-ink;
+  margin-top: 0.5rem;
+}
+
+.italic { font-style: italic; font-weight: $fw-regular; color: $color-accent; }
+
+.lede { color: $color-ink-mute; line-height: $lh-relaxed; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  @include up(md) { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── Card ─────────────────────────────────────────────────────────────── */
+.card {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: 4px;
+  background: $color-deep;
+  text-decoration: none;
+  color: inherit;
+  isolation: isolate;
+  aspect-ratio: 4 / 5;
+  transition: transform $dur-base $ease-out;
+
+  &:hover {
+    transform: translateY(-3px);
+    .mediaImg { transform: scale(1.05); }
+    .ctaArrow { transform: translateX(6px); }
+    .cta { color: $color-accent; }
+  }
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.mediaImg {
+  object-fit: cover;
+  transition: transform 700ms $ease-out, filter 700ms $ease-out;
+  filter: contrast(1.05) saturate(0.92) brightness(0.85);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5, 5, 7, 0.2) 0%, transparent 30%, transparent 50%, rgba(5, 5, 7, 0.92) 100%);
+}
+
+.body {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem 1.75rem 1.75rem;
+}
+
+.kicker {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: $ls-wider;
+  color: $color-accent;
+}
+
+.cardTitle {
+  font-family: $font-display;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: $fw-bold;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: $color-ink;
+}
+
+.cardCopy {
+  color: rgba($color-ink, 0.78);
+  font-size: $fs-sm;
+  line-height: $lh-relaxed;
+  max-width: 32ch;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.625rem;
+  padding-top: 0.875rem;
+  border-top: 1px solid rgba($color-ink, 0.18);
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-ink;
+  transition: color $dur-fast $ease-out;
+}
+
+.ctaArrow {
+  display: inline-block;
+  transition: transform $dur-fast $ease-out;
+}

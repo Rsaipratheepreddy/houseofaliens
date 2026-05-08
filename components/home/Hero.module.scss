@@ -1,0 +1,385 @@
+@use 'abstracts' as *;
+
+.root {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  // Header now floats over the hero, so the hero takes the full viewport
+  // and the bg image extends behind the nav.
+  min-height: 100dvh;
+  display: flex;
+  // Vertically centred — was flex-end, but with the smaller typography
+  // that left a huge void at the top of the viewport.
+  align-items: center;
+  padding-top: calc(var(--header-height) + 1rem);
+  padding-bottom: clamp(2.5rem, 6vh, 6rem);
+  color: $color-ink;
+}
+
+/* ── Background photography ────────────────────────────────────────────── */
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  will-change: transform;
+  background-color: $color-deep;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+}
+
+.slideImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.05) saturate(0.95) brightness(0.85);
+  display: block;
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  // Soft scrim — only the bottom is heavy (so the section blends into the
+  // next section), the rest stays light enough that the photograph shows.
+  background:
+    linear-gradient(180deg, rgba(5, 5, 7, 0.20) 0%, rgba(5, 5, 7, 0.10) 35%, rgba(5, 5, 7, 0.55) 80%, rgba(5, 5, 7, 0.95) 100%),
+    linear-gradient(90deg,  rgba(5, 5, 7, 0.55) 0%, rgba(5, 5, 7, 0.20) 50%, rgba(5, 5, 7, 0.05) 100%);
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: 3px 3px;
+  mix-blend-mode: overlay;
+  opacity: 0.55;
+  animation: grainShift 6s steps(8) infinite;
+  pointer-events: none;
+}
+
+@keyframes grainShift {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(-2px, 1px); }
+  40%  { transform: translate(1px, -1px); }
+  60%  { transform: translate(-1px, 2px); }
+  80%  { transform: translate(2px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ── Left rail — drop number / label ──────────────────────────────────── */
+// Hidden in the new layout — the featured product card on the right
+// already carries the drop number + name, so the vertical rail was
+// redundant and was overflowing the viewport on shorter heights.
+.rail {
+  display: none;
+}
+
+.railNumber {
+  font-family: $font-display;
+  font-size: $fs-md;
+  font-weight: $fw-bold;
+  color: $color-accent;
+}
+
+.railLine {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(180deg, $color-accent, transparent);
+}
+
+.railLabel {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* ── Foreground content ──────────────────────────────────────────────── */
+
+/* Outer wrapper carries the scroll-parallax MotionValues so they don't
+   collide with the inner shake animation on the same transform channel. */
+.outerFg {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  will-change: transform;
+}
+
+.inner {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 2rem); // tighter gutter between text + card
+  width: 100%;
+  will-change: transform;
+
+  @include up(lg) {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  }
+}
+
+.textCol {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 1.6vh, 1.5rem);
+  align-items: flex-start;
+  max-width: 1100px;
+  // Nudge content slightly inward so it doesn't sit flush against the left edge
+  @include up(lg) {
+    padding-left: clamp(1rem, 3vw, 3rem);
+  }
+}
+
+/* ── Featured drop card (right column) ───────────────────────────── */
+.featuredCol {
+  display: flex;
+  justify-content: flex-end;
+  // Pull the card inward from the right edge so it doesn't sit flush
+  @include up(lg) { padding-right: clamp(1rem, 4vw, 4rem); }
+
+  @include down(lg) { justify-content: flex-start; max-width: 280px; }
+}
+
+.featuredCard {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  background: rgba($color-deep, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba($color-ink, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color $dur-base $ease-out, transform $dur-base $ease-out, box-shadow $dur-base $ease-out;
+
+  &:hover {
+    border-color: rgba($color-accent, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 28px rgba($color-accent, 0.2);
+
+    .featuredImg { transform: scale(1.04); }
+    .featuredCta { color: $color-accent; gap: 0.625rem; }
+  }
+}
+
+.featuredMedia {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: $color-surface;
+}
+
+.featuredImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 700ms $ease-out;
+  filter: contrast(1.05) saturate(0.95);
+}
+
+.featuredBadge {
+  position: absolute;
+  top: 0.875rem;
+  left: 0.875rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: $radius-pill;
+  background: $color-accent;
+  color: $color-void;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: $fw-semibold;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.featuredBody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  padding: 0.75rem 0.875rem 0.875rem;
+}
+
+.featuredDrop {
+  font-family: $font-mono;
+  font-size: 0.625rem;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+.featuredRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.featuredName {
+  font-family: $font-display;
+  font-size: 0.9375rem;
+  font-weight: $fw-semibold;
+  letter-spacing: $ls-tight;
+  text-transform: uppercase;
+  color: $color-ink;
+  margin: 0;
+  @include truncate(1);
+}
+
+.featuredPrice {
+  font-family: $font-mono;
+  font-size: 0.8125rem;
+  font-weight: $fw-semibold;
+  color: $color-ink;
+}
+
+.featuredCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba($color-ink, 0.18);
+  font-family: $font-mono;
+  font-size: 0.625rem;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-ink;
+  transition: color $dur-fast $ease-out, gap $dur-fast $ease-out;
+}
+
+.eyebrow {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+.heading {
+  font-family: $font-display;
+  font-weight: $fw-bold;
+  // Reduced from 8vw/13vh — was overwhelming on wide displays.
+  font-size: clamp(2rem, min(5.5vw, 9vh), 5.25rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: $color-ink;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.headingLine {
+  display: block;
+  overflow: hidden; // for the slide-up animation
+}
+
+.headingInner {
+  display: inline-block;
+}
+
+.italic {
+  font-style: italic;
+  font-weight: $fw-regular;
+  margin-right: 0.4em;
+}
+
+.dim {
+  color: $color-ink-faint;
+  font-style: italic;
+  font-weight: $fw-regular;
+}
+
+.headingAccent {
+  background: $gradient-aurora;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.lede {
+  max-width: 50ch;
+  font-size: $fs-md;
+  color: $color-ink-mute;
+  line-height: $lh-relaxed;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+/* ── Slide indicators ────────────────────────────────────────────────── */
+.indicators {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.dot {
+  @include reset-button;
+  width: 24px;
+  height: 4px;
+  background: rgba($color-ink, 0.25);
+  transition: background-color $dur-base $ease-out, width $dur-base $ease-out;
+}
+
+.dotActive {
+  background: $color-accent;
+  width: 48px;
+}
+
+/* ── Scroll cue ──────────────────────────────────────────────────────── */
+.scrollCue {
+  position: absolute;
+  bottom: clamp(1rem, 3vw, 2rem);
+  right: clamp(1rem, 4vw, 3rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  z-index: 2;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-ink-mute;
+}
+
+.scrollLine {
+  position: relative;
+  width: 1px;
+  height: 64px;
+  background: rgba($color-ink, 0.18);
+  overflow: hidden;
+
+  span {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: linear-gradient(180deg, transparent, $color-accent);
+    animation: scrollLine 1.8s ease-in-out infinite;
+  }
+}
+
+@keyframes scrollLine {
+  0%   { transform: translateY(-100%); }
+  100% { transform: translateY(260%); }
+}

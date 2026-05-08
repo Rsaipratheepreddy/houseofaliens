@@ -1,0 +1,128 @@
+@use 'variables' as *;
+@use 'sass:map';
+
+// -- Responsive ---------------------------------------------------------------
+$breakpoints: (
+  sm:  $bp-sm,
+  md:  $bp-md,
+  lg:  $bp-lg,
+  xl:  $bp-xl,
+  2xl: $bp-2xl,
+);
+
+@mixin up($name) {
+  $value: map.get($breakpoints, $name);
+  @if $value {
+    @media (min-width: $value) { @content; }
+  }
+}
+
+@mixin down($name) {
+  $value: map.get($breakpoints, $name);
+  @if $value {
+    @media (max-width: ($value - 1px)) { @content; }
+  }
+}
+
+// -- Layout -------------------------------------------------------------------
+@mixin container {
+  width: 100%;
+  max-width: $container-max;
+  margin-inline: auto;
+  padding-inline: $container-pad;
+}
+
+@mixin grid($cols: 12, $gap: 1.5rem) {
+  display: grid;
+  grid-template-columns: repeat($cols, minmax(0, 1fr));
+  gap: $gap;
+}
+
+// -- Typography ---------------------------------------------------------------
+@mixin display($size: $fs-3xl) {
+  font-family: $font-display;
+  font-weight: $fw-bold;
+  font-size: $size;
+  line-height: $lh-tight;
+  letter-spacing: $ls-tight;
+}
+
+@mixin eyebrow {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  font-weight: $fw-medium;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+@mixin label {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  font-weight: $fw-medium;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-ink-mute;
+}
+
+// -- Effects ------------------------------------------------------------------
+@mixin glow($color: $color-accent, $intensity: 0.35) {
+  box-shadow:
+    0 0 0 1px rgba($color, 0.5),
+    0 0 24px rgba($color, $intensity);
+}
+
+@mixin scanlines {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.02) 0,
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
+}
+
+@mixin grid-bg($color: rgba(255, 255, 255, 0.04), $size: 48px) {
+  background-image:
+    linear-gradient(to right, $color 1px, transparent 1px),
+    linear-gradient(to bottom, $color 1px, transparent 1px);
+  background-size: $size $size;
+}
+
+// -- Forms / Buttons ----------------------------------------------------------
+@mixin focus-ring {
+  outline: 2px solid $color-accent;
+  outline-offset: 2px;
+}
+
+@mixin reset-button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+// -- Utility ------------------------------------------------------------------
+@mixin truncate($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    display: -webkit-box;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

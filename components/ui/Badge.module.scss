@@ -1,0 +1,21 @@
+@use 'abstracts' as *;
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: $radius-pill;
+  font-family: $font-mono;
+  font-size: 0.6875rem;
+  font-weight: $fw-medium;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tone-neutral { background: $color-surface; color: $color-ink-mute; border: 1px solid $color-border; }
+.tone-accent  { background: rgba($color-accent, 0.12); color: $color-accent; border: 1px solid rgba($color-accent, 0.4); }
+.tone-plasma  { background: rgba($color-plasma, 0.14); color: $color-plasma; border: 1px solid rgba($color-plasma, 0.45); }
+.tone-cyan    { background: rgba($color-cyan, 0.12);   color: $color-cyan;   border: 1px solid rgba($color-cyan, 0.45); }
+.tone-danger  { background: rgba($color-danger, 0.14); color: $color-danger; border: 1px solid rgba($color-danger, 0.45); }

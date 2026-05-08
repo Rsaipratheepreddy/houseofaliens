@@ -1,0 +1,126 @@
+@use 'abstracts' as *;
+
+.root {
+  position: relative;
+  background: $color-void;
+  border-block: 1px solid $color-border;
+  padding-block: clamp(4rem, 10vw, 8rem);
+  overflow: hidden;
+  isolation: isolate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    @include grid-bg(rgba(255, 255, 255, 0.03), 96px);
+    mask: radial-gradient(ellipse at 50% 50%, black 30%, transparent 80%);
+    -webkit-mask: radial-gradient(ellipse at 50% 50%, black 30%, transparent 80%);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(ellipse at 30% 30%, rgba($color-accent, 0.1), transparent 50%),
+      radial-gradient(ellipse at 70% 80%, rgba($color-accent, 0.08), transparent 60%);
+  }
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+}
+
+/* ── Mega-type marquee (scroll-tied) ───────────────────────────── */
+.marquee {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.25rem, 1vw, 1rem);
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+}
+
+.row {
+  width: max-content;
+  white-space: nowrap;
+  font-family: $font-display;
+  font-weight: $fw-bold;
+  // Moderate size — multiple words fit + remain readable as they scroll
+  font-size: clamp(2.25rem, 6.5vw, 6rem);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  will-change: transform;
+}
+
+/* Top row: outline (stroke) text */
+.rowOutline {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba($color-ink, 0.6);
+  text-stroke: 1px rgba($color-ink, 0.6);
+}
+
+/* Bottom row: solid alien-green */
+.rowFilled {
+  color: $color-accent;
+  text-shadow: 0 0 22px rgba($color-accent, 0.22);
+}
+
+/* ── Brand stats ────────────────────────────────────────────────── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border-top: 1px solid $color-border;
+  border-bottom: 1px solid $color-border;
+
+  @include up(md) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1.25rem, 2.5vw, 2rem);
+  border-right: 1px solid $color-border;
+
+  &:nth-child(2n) { border-right: 0; }
+
+  @include up(md) {
+    border-right: 1px solid $color-border;
+    border-bottom: 0;
+
+    &:nth-child(2n) { border-right: 1px solid $color-border; }
+    &:last-child    { border-right: 0; }
+  }
+
+  @include down(md) {
+    &:nth-child(-n + 2) { border-bottom: 1px solid $color-border; }
+  }
+}
+
+.statNum {
+  font-family: $font-display;
+  font-weight: $fw-bold;
+  font-size: clamp(2.75rem, 5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: $color-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.statLabel {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-ink-mute;
+  max-width: 22ch;
+  line-height: 1.4;
+}

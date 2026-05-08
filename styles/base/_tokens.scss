@@ -1,0 +1,44 @@
+@use '../abstracts' as *;
+
+/* CSS variables exposed for runtime theming + use in CSS-in-JS or inline styles */
+:root {
+  --color-void:          #{$color-void};
+  --color-deep:          #{$color-deep};
+  --color-surface:       #{$color-surface};
+  --color-surface-2:     #{$color-surface-2};
+  --color-border:        #{$color-border};
+  --color-border-strong: #{$color-border-strong};
+
+  --color-ink:        #{$color-ink};
+  --color-ink-mute:   #{$color-ink-mute};
+  --color-ink-faint:  #{$color-ink-faint};
+
+  --color-accent:      #{$color-accent};
+  --color-accent-soft: #{$color-accent-soft};
+  --color-accent-deep: #{$color-accent-deep};
+  --color-plasma:      #{$color-plasma};
+  --color-cyan:        #{$color-cyan};
+  --color-danger:      #{$color-danger};
+  --color-success:     #{$color-success};
+
+  --gradient-aurora:   #{$gradient-aurora};
+  --gradient-headline: #{$gradient-headline};
+
+  --font-display: #{$font-display};
+  --font-body:    #{$font-body};
+  --font-mono:    #{$font-mono};
+  /* `--font-glancyr` is injected by next/font/local on <html> at runtime —
+     do not declare it here or we'd overwrite that injection. */
+
+  --radius-sm: #{$radius-sm};
+  --radius-md: #{$radius-md};
+  --radius-lg: #{$radius-lg};
+  --radius-pill: #{$radius-pill};
+
+  --container-max: #{$container-max};
+  --container-pad: #{$container-pad};
+
+  --header-height: 72px;
+
+  color-scheme: dark;
+}

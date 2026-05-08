@@ -1,0 +1,316 @@
+@use 'abstracts' as *;
+
+/* ───────────────────────────────────────────────────────────────────────
+   Manifesto
+   - tall section: 380vh runway for the pinned statements + space below
+     for the pillars
+   - .sticky pins the entire viewport
+   ─────────────────────────────────────────────────────────────────────── */
+
+.root {
+  position: relative;
+  background: $color-void;
+  border-block: 1px solid $color-border;
+  // tall enough for 4 statement holds + the pillars
+  // (each statement gets ~75vh of scroll runway)
+  --runway: 320vh;
+  height: calc(var(--runway) + 80vh);
+
+  @include down(md) { height: auto; }
+}
+
+/* ── Sticky viewport ────────────────────────────────────────────────── */
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: center;
+  overflow: hidden;
+  isolation: isolate;
+  padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 4vw, 3rem);
+
+  @include down(md) {
+    position: relative;
+    height: 80dvh;
+  }
+}
+
+/* ── Backdrop: grid floor + alien glow ──────────────────────────────── */
+.grid {
+  position: absolute;
+  inset: -10%;
+  z-index: -2;
+  @include grid-bg(rgba(255, 255, 255, 0.04), 64px);
+  mask: radial-gradient(ellipse at 50% 60%, black, transparent 75%);
+  -webkit-mask: radial-gradient(ellipse at 50% 60%, black, transparent 75%);
+}
+
+.glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 50% 60%, rgba($color-accent, 0.18), transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba($color-accent-deep, 0.10), transparent 55%),
+    radial-gradient(circle at 20% 30%, rgba($color-accent, 0.08), transparent 60%);
+  pointer-events: none;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.02) 0 1px,
+    transparent 1px 4px
+  );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+/* ── HUD — top bar ──────────────────────────────────────────────────── */
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-ink-mute;
+  z-index: 1;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid rgba($color-accent, 0.35);
+  border-radius: $radius-pill;
+  background: rgba($color-accent, 0.05);
+  color: $color-accent;
+}
+
+.tagDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: $color-accent;
+  animation: pulse 1.4s ease-in-out infinite;
+  box-shadow: 0 0 0 4px rgba($color-accent, 0.16);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1);   opacity: 1; }
+  50%      { transform: scale(0.6); opacity: 0.6; }
+}
+
+.counter {
+  font-family: $font-mono;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: $ls-wider;
+  color: $color-ink-faint;
+}
+
+/* ── Centerpiece statement ──────────────────────────────────────────── */
+.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.75rem;
+  text-align: center;
+  z-index: 1;
+}
+
+.eyebrow {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-accent;
+}
+
+.statement {
+  font-family: $font-display;
+  font-weight: $fw-bold;
+  font-size: clamp(2.5rem, 9vw, 8rem);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  color: $color-ink;
+  max-width: 16ch;
+  text-wrap: balance;
+  // film-grain text fill via background-clip
+  background:
+    linear-gradient(180deg, $color-ink 0%, rgba($color-ink, 0.85) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dots {
+  display: inline-flex;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid $color-border;
+  border-radius: $radius-pill;
+  background: rgba($color-deep, 0.6);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.dot {
+  width: 22px;
+  height: 3px;
+  background: rgba($color-ink, 0.18);
+  border-radius: 2px;
+  transition: background-color $dur-base $ease-out, width $dur-base $ease-out;
+}
+
+.dotActive {
+  background: $color-accent;
+  width: 36px;
+  box-shadow: 0 0 12px rgba($color-accent, 0.6);
+}
+
+/* ── HUD — bottom bar ───────────────────────────────────────────────── */
+.bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: $ls-wider;
+  text-transform: uppercase;
+  color: $color-ink-faint;
+  z-index: 1;
+}
+
+.coords {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.625rem;
+}
+
+.coordsLabel { color: $color-ink-faint; }
+.coordsValue {
+  color: $color-ink;
+  font-variant-numeric: tabular-nums;
+}
+
+.scrollHint {
+  position: relative;
+  padding-left: 26px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 18px;
+    height: 1px;
+    background: $color-accent;
+    transform: translateY(-50%);
+    animation: scrollPulse 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { width: 18px; opacity: 0.6; }
+  50%      { width: 6px;  opacity: 1;   }
+}
+
+/* ── Pillars (after the sticky portion) ─────────────────────────────── */
+.pillars {
+  position: relative;
+  z-index: 2;
+  background: $color-void;
+  padding: clamp(4rem, 8vw, 7rem) $container-pad;
+  max-width: $container-max;
+  margin-inline: auto;
+}
+
+.pillarsHead {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+}
+
+.pillarsTitle {
+  font-family: $font-display;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: $fw-bold;
+  letter-spacing: -0.025em;
+  line-height: 1.0;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
+  color: $color-ink;
+}
+
+.pillarsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+
+  @include up(md) { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+}
+
+.pillar {
+  position: relative;
+  padding: 2rem 1.75rem 2.25rem;
+  background: $color-deep;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  transition: border-color $dur-base $ease-out, transform $dur-base $ease-out;
+
+  &:hover {
+    border-color: rgba($color-accent, 0.45);
+    transform: translateY(-3px);
+    .pillarRule { background: $color-accent; }
+  }
+}
+
+.pillarTop {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.75rem;
+}
+
+.pillarNum {
+  font-family: $font-mono;
+  font-size: $fs-xs;
+  letter-spacing: $ls-wider;
+  color: $color-accent;
+  font-weight: $fw-semibold;
+}
+
+.pillarRule {
+  flex: 1;
+  height: 1px;
+  background: $color-border;
+  transition: background-color $dur-base $ease-out;
+}
+
+.pillarTitle {
+  font-family: $font-display;
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  font-weight: $fw-bold;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: $color-ink;
+  margin-bottom: 0.625rem;
+  line-height: 1;
+}
+
+.pillarBody {
+  color: $color-ink-mute;
+  font-size: $fs-sm;
+  line-height: $lh-relaxed;
+}
