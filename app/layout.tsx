@@ -18,7 +18,7 @@ const glancyr = localFont({
   src: [
     { path: '../public/fonts/glancyr/Glancyr-Regular.otf',  weight: '400', style: 'normal' },
     { path: '../public/fonts/glancyr/Glancyr-Medium.otf',   weight: '500', style: 'normal' },
-    { path: '../public/fonts/glancyr/Glancyr-Semibold.otf', weight: '600', style: 'normal' },
+    { path: '../public/fonts/glancyr/Glancyr-SemiBold.otf', weight: '600', style: 'normal' },
     { path: '../public/fonts/glancyr/Glancyr-Bold.otf',     weight: '700', style: 'normal' },
   ],
   variable: '--font-glancyr',
